@@ -10,35 +10,35 @@ use std::collections::HashMap;
 
 #[derive(Deserialize, Debug)]
 pub struct Whoami {
-    email: String,
-    first_name: String,
-    last_name: String,
+    pub email: String,
+    pub first_name: String,
+    pub last_name: String,
     #[serde(default)]
-    phone: Option<String>,
+    pub phone: Option<String>,
     #[serde(default)]
-    via_sso: Option<String>,
-    privileges: Vec<Privilege>,
-    tags: Vec<String>,
+    pub via_sso: Option<String>,
+    pub privileges: Vec<Privilege>,
+    pub tags: Vec<String>,
 }
 
 #[derive(Deserialize, Debug)]
 pub struct Privilege {
-    scope: String,
-    org_id: String,
+    pub scope: String,
+    pub org_id: String,
     #[serde(default)]
-    org_name: Option<String>,
+    pub org_name: Option<String>,
     #[serde(default)]
-    msp_id: Option<String>,
+    pub msp_id: Option<String>,
     #[serde(default)]
-    msp_name: Option<String>,
+    pub msp_name: Option<String>,
     #[serde(default)]
-    orggroup_ids: Option<Vec<String>>,
-    name: String,
-    role: String,
+    pub orggroup_ids: Option<Vec<String>>,
+    pub name: String,
+    pub role: String,
     #[serde(default)]
-    site_id: Option<String>,
+    pub site_id: Option<String>,
     #[serde(default)]
-    sitegroup_ids: Option<Vec<String>>,
+    pub sitegroup_ids: Option<Vec<String>>,
 }
 
 pub fn login<'a>(c: &HttpClient, u: &'a str, p: &'a str, otp: Option<&'a str>) -> Result<(), ()> {

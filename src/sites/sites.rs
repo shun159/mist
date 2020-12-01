@@ -12,82 +12,82 @@ pub struct Sites(Vec<Site>);
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Site {
-    name: String,
+    pub name: String,
     #[serde(default)]
-    timezone: Option<String>,
+    pub timezone: Option<String>,
     #[serde(default)]
-    country_code: Option<String>,
+    pub country_code: Option<String>,
     #[serde(default)]
-    secpolicy_id: Option<String>,
+    pub secpolicy_id: Option<String>,
     #[serde(default)]
-    alarmtemplate_id: Option<String>,
+    pub alarmtemplate_id: Option<String>,
     #[serde(default)]
-    networktemplate_id: Option<String>,
+    pub networktemplate_id: Option<String>,
     #[serde(default)]
-    latlng: Option<HashMap<String, f64>>,
+    pub latlng: Option<HashMap<String, f64>>,
     #[serde(default)]
-    sitegroup_ids: Option<Vec<String>>,
+    pub sitegroup_ids: Option<Vec<String>>,
     #[serde(default)]
-    address: Option<String>,
+    pub address: Option<String>,
     #[serde(default)]
-    notes: Option<String>,
+    pub notes: Option<String>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct SiteStats {
-    name: String,
-    id: String,
+    pub name: String,
+    pub id: String,
     #[serde(default)]
-    address: Option<String>,
+    pub address: Option<String>,
     #[serde(default)]
-    alarmtemplate_id: Option<String>,
+    pub alarmtemplate_id: Option<String>,
     #[serde(default)]
-    country_code: Option<String>,
+    pub country_code: Option<String>,
     #[serde(default)]
-    created_time: Option<u32>,
+    pub created_time: Option<u32>,
     #[serde(default)]
-    lat: Option<f64>,
+    pub lat: Option<f64>,
     #[serde(default)]
-    latlng: Option<HashMap<String, f64>>,
+    pub latlng: Option<HashMap<String, f64>>,
     #[serde(default)]
-    lng: Option<f64>,
+    pub lng: Option<f64>,
     #[serde(default)]
-    modified_time: Option<u32>,
+    pub modified_time: Option<u32>,
     #[serde(default)]
-    msp_id: Option<String>,
+    pub msp_id: Option<String>,
     #[serde(default)]
-    networktemplate_id: Option<String>,
+    pub networktemplate_id: Option<String>,
     #[serde(default)]
-    num_ap: u16,
+    pub num_ap: u16,
     #[serde(default)]
-    num_ap_connected: u16,
+    pub num_ap_connected: u16,
     #[serde(default)]
-    num_clients: u16,
+    pub num_clients: u16,
     #[serde(default)]
-    num_devices: u16,
+    pub num_devices: u16,
     #[serde(default)]
-    num_devices_connected: u16,
+    pub num_devices_connected: u16,
     #[serde(default)]
-    num_gateway: u16,
+    pub num_gateway: u16,
     #[serde(default)]
-    num_gateway_connected: u16,
+    pub num_gateway_connected: u16,
     #[serde(default)]
-    num_switch: u16,
+    pub num_switch: u16,
     #[serde(default)]
-    num_switch_connected: u16,
+    pub num_switch_connected: u16,
     #[serde(default)]
-    org_id: Option<String>,
+    pub org_id: Option<String>,
     #[serde(default)]
-    rftemplate_id: Option<String>,
+    pub rftemplate_id: Option<String>,
     #[serde(default)]
-    secpolicy_id: Option<String>,
+    pub secpolicy_id: Option<String>,
     #[serde(default)]
-    timezone: Option<String>,
+    pub timezone: Option<String>,
     #[serde(default)]
-    tzoffset: Option<i32>,
+    pub tzoffset: Option<i32>,
 }
 
-pub fn get_stat<'a>(c: &HttpClient, site_id: &'a str) -> Result<SiteStats, ()> {
+pub fn get_stats<'a>(c: &HttpClient, site_id: &'a str) -> Result<SiteStats, ()> {
     match c.get(site_stats_path(site_id), &()) {
         Ok(Some(sites)) => {
             debug("get site stats request succeed");

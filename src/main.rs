@@ -14,6 +14,7 @@ pub mod http;
 pub mod logger;
 pub mod sites;
 pub mod wlans;
+pub mod org;
 
 pub use crate::auth::paths::*;
 pub use crate::auth::*;
@@ -24,6 +25,7 @@ fn main() {
         Ok(_c) => {
             ()
         }
-        Err(_) => logger::warn("API_TOKEN is not configured"),
+        Err(_) =>
+            logger::warn("API_TOKEN is not configured"),
     }
 }
