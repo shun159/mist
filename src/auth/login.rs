@@ -44,7 +44,7 @@ pub struct Privilege {
 pub fn login<'a>(c: &HttpClient, u: &'a str, p: &'a str, otp: Option<&'a str>) -> Result<(), ()> {
     let req = login_request(u, p, otp);
     match c.post(paths::login(), &req) {
-        Ok(Some(Object(map))) if map.is_empty()  => {
+        Ok(Some(Object(map))) if map.is_empty() => {
             info("Login succeed");
             Ok(())
         }
@@ -56,15 +56,15 @@ pub fn login<'a>(c: &HttpClient, u: &'a str, p: &'a str, otp: Option<&'a str>) -
 }
 
 pub fn logout(c: &HttpClient) -> Result<(), ()> {
-    match c.post(paths::logout(), &()) {
+    match c.post::<(), serde_json::Value>(paths::logout(), &()) {
         Ok(_) => {
             info("Logout succeed");
             Ok(())
-        },
+        }
         Err(_) => {
             warn("logout failed");
             Err(())
-        },
+        }
     }
 }
 

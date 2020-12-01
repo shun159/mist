@@ -33,21 +33,23 @@ impl HttpClient {
         Ok(Some(response))
     }
 
-    pub fn post<T>(&self, url: String, body: &T) -> reqwest::Result<Option<serde_json::Value>>
+    pub fn post<T, U>(&self, url: String, body: &T) -> reqwest::Result<Option<U>>
     where
+        U: for<'de> serde::Deserialize<'de>,
         T: Serialize + ?Sized,
     {
         let request = self.c.post(&*url).json(body);
-        let response: serde_json::Value = request.send()?.json()?;
+        let response: U = request.send()?.json()?;
         Ok(Some(response))
     }
 
-    pub fn put<T>(&self, url: String, body: &T) -> reqwest::Result<Option<serde_json::Value>>
+    pub fn put<T, U>(&self, url: String, body: &T) -> reqwest::Result<Option<U>>
     where
+        U: for<'de> serde::Deserialize<'de>,
         T: Serialize + ?Sized,
     {
         let request = self.c.put(&*url).json(body);
-        let response: serde_json::Value = request.send()?.json()?;
+        let response: U = request.send()?.json()?;
         Ok(Some(response))
     }
 
