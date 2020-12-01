@@ -21,9 +21,8 @@ pub use crate::auth::*;
 fn main() {
     pretty_env_logger::init();
     match http::HttpClient::new() {
-        Ok(c) => {
-            let r = sites::sites::list(&c, "def9f111-57b4-48ee-8474-5edf857abf03");
-            println!("{:#?}", r);
+        Ok(_c) => {
+            ()
         }
         Err(_) => logger::warn("API_TOKEN is not configured"),
     }
