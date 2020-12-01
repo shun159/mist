@@ -11,6 +11,7 @@ extern crate serde_json;
 pub mod auth;
 pub mod http;
 pub mod logger;
+pub mod wlans;
 
 pub use crate::auth::*;
 pub use crate::auth::paths::*;
