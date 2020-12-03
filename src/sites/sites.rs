@@ -87,6 +87,93 @@ pub struct SiteStats {
     pub tzoffset: Option<i32>,
 }
 
+#[derive(Serialize, Deserialize, Debug)]
+pub struct SiteGroups(Vec<SiteGroup>);
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct SiteGroup {
+    pub site_ids: Vec<String>,
+    pub id: String,
+    pub name: String,
+    pub org_id: String,
+    pub created_time: u32,
+    pub modified_time: u32,
+}
+
+pub fn list_group<'a>(c: &HttpClient, org_id: &'a str) -> Result<SiteGroups, ()> {
+    match c.get(site_groups_path(org_id), &()) {
+        Ok(Some(sitegroups)) => {
+            debug("list site groups request succeed");
+            Ok(sitegroups)
+        }
+        _ => {
+            debug("list site groups request failed");
+            Err(())
+        }
+    }
+}
+
+pub fn get_group<'a>(c: &HttpClient, org_id: &'a str, group_id: &'a str) -> Result<SiteGroup, ()> {
+    match c.get(site_group_path(org_id, group_id), &()) {
+        Ok(Some(sitegroup)) => {
+            debug("get site groups request succeed");
+            Ok(sitegroup)
+        }
+        _ => {
+            debug("get site groups request failed");
+            Err(())
+        }
+    }
+}
+
+pub fn create_group<'a>(
+    c: &HttpClient,
+    org_id: &'a str,
+    group: &SiteGroup,
+) -> Result<SiteGroup, ()> {
+    match c.post(site_groups_path(org_id), &group) {
+        Ok(Some(sitegroup)) => {
+            debug("create site groups request succeed");
+            Ok(sitegroup)
+        }
+        _ => {
+            debug("create site groups request failed");
+            Err(())
+        }
+    }
+}
+
+pub fn update_group<'a>(
+    c: &HttpClient,
+    org_id: &'a str,
+    group_id: &'a str,
+    group: &SiteGroup,
+) -> Result<SiteGroup, ()> {
+    match c.put(site_group_path(org_id, group_id), &group) {
+        Ok(Some(sitegroup)) => {
+            debug("update site groups request succeed");
+            Ok(sitegroup)
+        }
+        _ => {
+            debug("update site groups request failed");
+            Err(())
+        }
+    }
+}
+
+pub fn delete_group<'a>(c: &HttpClient, org_id: &'a str, group_id: &'a str) -> Result<(), ()> {
+    match c.delete(site_group_path(org_id, group_id), &()) {
+        Ok(Some(_)) => {
+            debug("get site groups request succeed");
+            Ok(())
+        }
+        _ => {
+            debug("get site groups request failed");
+            Err(())
+        }
+    }
+}
+
 pub fn get_stats<'a>(c: &HttpClient, site_id: &'a str) -> Result<SiteStats, ()> {
     match c.get(site_stats_path(site_id), &()) {
         Ok(Some(sites)) => {
@@ -170,4 +257,12 @@ pub fn site_stats_path<'a>(site_id: &'a str) -> String {
 
 pub fn sites_path<'a>(org_id: &'a str) -> String {
     format!("{}/orgs/{}/sites", MIST_API_BASE, org_id)
+}
+
+pub fn site_groups_path<'a>(org_id: &'a str) -> String {
+    format!("{}/orgs/{}/sitegroups", MIST_API_BASE, org_id)
+}
+
+pub fn site_group_path<'a>(org_id: &'a str, group_id: &'a str) -> String {
+    format!("{}/orgs/{}/sitegroups/{}", MIST_API_BASE, org_id, group_id)
 }

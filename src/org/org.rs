@@ -24,7 +24,7 @@ pub struct Org {
     #[serde(default)]
     pub orggroup_ids: Option<Vec<String>>,
     #[serde(default = "default_allow_mist")]
-    pub allow_mist: bool
+    pub allow_mist: bool,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -50,7 +50,7 @@ pub struct OrgSetting {
     pub org_id: String,
     pub created_time: u32,
     pub modified_time: u32,
-    pub tags: Vec<String>
+    pub tags: Vec<String>,
 }
 
 #[derive(Serialize, Deserialize, Debug, Default)]
@@ -87,7 +87,7 @@ pub struct OrgSettingParams {
     #[serde(default)]
     pub device_cert: Option<DeviceCert>,
     #[serde(default)]
-    pub tags: Option<Vec<String>>
+    pub tags: Option<Vec<String>>,
 }
 
 #[derive(Serialize, Deserialize, Debug, Default)]
@@ -108,13 +108,13 @@ pub struct Management {
     pub use_wxtunnel: bool,
     #[serde(default = "default_disabled")]
     pub use_mxtunnel: bool,
-    pub mxtunnel_ids: Vec<String>
+    pub mxtunnel_ids: Vec<String>,
 }
 
 #[derive(Serialize, Deserialize, Debug, Default)]
 pub struct Pcap {
     pub bucket: String,
-    pub max_pkt_len: u16
+    pub max_pkt_len: u16,
 }
 
 #[derive(Serialize, Deserialize, Debug, Default)]
@@ -123,7 +123,7 @@ pub struct Security {
     pub disable_local_ssh: bool,
     #[serde(default = "default_disabled")]
     pub limit_ssh_access: bool,
-    pub fips_zeroize_password: String
+    pub fips_zeroize_password: String,
 }
 
 #[derive(Serialize, Deserialize, Debug, Default)]
@@ -131,7 +131,7 @@ pub struct Installer {
     pub grace_period: u32,
     pub extra_site_ids: Vec<String>,
     #[serde(default = "default_disabled")]
-    pub allow_all_sites: bool
+    pub allow_all_sites: bool,
 }
 
 #[derive(Serialize, Deserialize, Debug, Default)]
@@ -140,7 +140,7 @@ pub struct RemoteSyslog {
     pub enabled: bool,
     #[serde(default = "default_disabled")]
     pub send_to_all_servers: bool,
-    pub servers: Vec<RemoteSyslogServer>
+    pub servers: Vec<RemoteSyslogServer>,
 }
 
 #[derive(Serialize, Deserialize, Debug, Default)]
@@ -150,35 +150,35 @@ pub struct RemoteSyslogServer {
     pub protocol: String,
     pub facility: String,
     pub severity: String,
-    pub tag: String
+    pub tag: String,
 }
 
 #[derive(Serialize, Deserialize, Debug, Default)]
 pub struct AutoSiteAssignment {
     #[serde(default = "default_disabled")]
     pub enable: bool,
-    pub rules: Vec<HashMap<String, String>>
+    pub rules: Vec<HashMap<String, String>>,
 }
 
 #[derive(Serialize, Deserialize, Debug, Default)]
 pub struct AutoDeviceNaming {
     #[serde(default = "default_disabled")]
     pub enable: bool,
-    pub rules: Vec<HashMap<String, String>>
+    pub rules: Vec<HashMap<String, String>>,
 }
 
 #[derive(Serialize, Deserialize, Debug, Default)]
 pub struct CloudShark {
     apitoken: String,
     #[serde(default)]
-    url: Option<String>
+    url: Option<String>,
 }
 
 #[derive(Serialize, Deserialize, Debug, Default)]
 pub struct AutoDeviceProfile {
     #[serde(default = "default_disabled")]
     pub enable: bool,
-    pub rules: Vec<HashMap<String, String>>
+    pub rules: Vec<HashMap<String, String>>,
 }
 
 #[derive(Serialize, Deserialize, Debug, Default)]
@@ -187,7 +187,7 @@ pub struct Cacerts(Vec<String>);
 #[derive(Serialize, Deserialize, Debug, Default)]
 pub struct DeviceCert {
     pub cert: String,
-    pub key: String
+    pub key: String,
 }
 
 pub fn get_setting<'a>(c: &HttpClient, org_id: &'a str) -> Result<OrgSetting, ()> {
@@ -195,7 +195,7 @@ pub fn get_setting<'a>(c: &HttpClient, org_id: &'a str) -> Result<OrgSetting, ()
         Ok(Some(orgs)) => {
             debug("org setting request succeed");
             Ok(orgs)
-        },
+        }
         _ => {
             warn("org setting request failed");
             Err(())
@@ -203,12 +203,16 @@ pub fn get_setting<'a>(c: &HttpClient, org_id: &'a str) -> Result<OrgSetting, ()
     }
 }
 
-pub fn update_setting<'a>(c: &HttpClient, org_id: &'a str, params: &OrgSettingParams) -> Result<OrgSetting, ()> {
+pub fn update_setting<'a>(
+    c: &HttpClient,
+    org_id: &'a str,
+    params: &OrgSettingParams,
+) -> Result<OrgSetting, ()> {
     match c.put(org_setting_path(org_id), params) {
         Ok(Some(orgs)) => {
             debug("org setting change request succeed");
             Ok(orgs)
-        },
+        }
         _ => {
             warn("org setting change request failed");
             Err(())
@@ -221,7 +225,7 @@ pub fn get_stats<'a>(c: &HttpClient, org_id: &'a str) -> Result<OrgStats, ()> {
         Ok(Some(orgs)) => {
             debug("org stats request succeed");
             Ok(orgs)
-        },
+        }
         _ => {
             warn("org stats request failed");
             Err(())
@@ -234,7 +238,7 @@ pub fn create(c: &HttpClient, org: &Org) -> Result<Org, ()> {
         Ok(Some(orgs)) => {
             debug("org create request succeed");
             Ok(orgs)
-        },
+        }
         _ => {
             warn("org create request failed");
             Err(())
@@ -247,7 +251,7 @@ pub fn update<'a>(c: &HttpClient, org_id: &'a str, org: &Org) -> Result<Org, ()>
         Ok(Some(orgs)) => {
             debug("org create request succeed");
             Ok(orgs)
-        },
+        }
         _ => {
             warn("org create request failed");
             Err(())
@@ -262,7 +266,7 @@ pub fn clone<'a>(c: &HttpClient, org_id: &'a str, name: &'a str) -> Result<Org, 
         Ok(Some(orgs)) => {
             debug("org create request succeed");
             Ok(orgs)
-        },
+        }
         _ => {
             warn("org create request failed");
             Err(())

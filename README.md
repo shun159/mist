@@ -1,4 +1,4 @@
-Mist API client implementation
+Mist API Rust client implementation
 -----
 
 ### Implemented:
@@ -9,6 +9,11 @@ Mist API client implementation
   - create(site)
   - delete(site)
   - get_stats(site)
+  - list(group)
+  - get(group)
+  - create(group)
+  - update(group)
+  - delete(group)
 - orgs
   - get_setting
   - update_setting
