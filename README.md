@@ -25,6 +25,7 @@ Mist API Rust client implementation
   - get privileges
 - inventory
   - list(with query string)
+  - claim
 
 ### Reference
 

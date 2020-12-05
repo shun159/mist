@@ -10,7 +10,7 @@ use serde::{Deserialize, Serialize};
 /// ref: https://api.mist.com/api/v1/docs/Org#inventory
 ///
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Default)]
 pub struct Inventories(Vec<Inventory>);
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -49,10 +49,28 @@ pub struct Inventory {
     // inventory last modified time, in epoch
     pub modified_time: u32,
     // inventory created time, in epoch
-    pub created_time: u32
+    pub created_time: u32,
 }
 
-pub fn list<'a>(c: &HttpClient, org_id: &'a str, query: Option<&'a str>) -> Result<Inventories, ()> {
+#[derive(Serialize, Deserialize, Debug)]
+pub struct ClaimDeviceReply {
+    #[serde(default)]
+    pub added: Vec<String>,
+    #[serde(default)]
+    pub duplicated: Vec<String>,
+    #[serde(default)]
+    pub error: Vec<String>,
+    #[serde(default)]
+    pub inventory_added: Inventories,
+    #[serde(default)]
+    pub inventory_duplicated: Inventories,
+}
+
+pub fn list<'a>(
+    c: &HttpClient,
+    org_id: &'a str,
+    query: Option<&'a str>,
+) -> Result<Inventories, ()> {
     match c.get(inventories_path(org_id, query), &()) {
         Ok(Some(inventories)) => {
             debug("list inventories request succeed");
@@ -60,6 +78,23 @@ pub fn list<'a>(c: &HttpClient, org_id: &'a str, query: Option<&'a str>) -> Resu
         }
         _ => {
             warn("list inventories request failed");
+            Err(())
+        }
+    }
+}
+
+pub fn claim<'a>(
+    c: &HttpClient,
+    org_id: &'a str,
+    claims: Vec<&'a str>,
+) -> Result<ClaimDeviceReply, ()> {
+    match c.post(inventories_path(org_id, None), &claims) {
+        Ok(Some(reply)) => {
+            debug("Claim device request succeed");
+            Ok(reply)
+        }
+        _ => {
+            warn("Claim device request failed");
             Err(())
         }
     }
