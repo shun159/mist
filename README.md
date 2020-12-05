@@ -23,3 +23,13 @@ Mist API Rust client implementation
 - auth
   - login/logout
   - get privileges
+- inventory
+  - list(with query string)
+
+### Reference
+
+[Mist API](https://api.mist.com/api/v1/docs/Home)
+
+### License
+
+Developed under Apache License, Version 2.0.

@@ -201,7 +201,6 @@ pub fn list<'a>(c: &HttpClient, org_id: &'a str) -> Result<Sites, ()> {
 }
 
 pub fn get<'a>(c: &HttpClient, site_id: &'a str) -> Result<Site, ()> {
-    println!("{}", site_path(site_id));
     match c.get(site_path(site_id), &()) {
         Ok(Some(site)) => {
             debug("get site request succeed");
