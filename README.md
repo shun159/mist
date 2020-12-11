@@ -26,6 +26,9 @@ Mist API Rust client implementation
 - inventory
   - list(with query string)
   - claim
+  - delete
+  - assign
+  - unassign
 
 ### Reference
 
